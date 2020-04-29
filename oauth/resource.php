@@ -21,6 +21,7 @@ if (!$server->verifyResourceRequest(OAuth2\Request::createFromGlobals())) {
 // set default error message
 $resp = array("error" => "Unknown error", "message" => "An unknown error has occured, please report this bug");
 
+error_log("resource.php about to getAccessTokenData()");
 // get information on user associated to the token
 $info_oauth = $server->getAccessTokenData(OAuth2\Request::createFromGlobals());
 $user = $info_oauth["user_id"];
@@ -32,8 +33,9 @@ $ldap = new LDAP($ldap_host,$ldap_port,$ldap_version);
 // Try to get user data on the LDAP
 try
 {
+	error_log("getDataForMattermost($ldap_base_dn, $ldap_filter, $ldap_bind_dn, \$ldap_bind_pass, $ldap_search_attribute, $user)");
 	$data = $ldap->getDataForMattermost($ldap_base_dn,$ldap_filter,$ldap_bind_dn,$ldap_bind_pass,$ldap_search_attribute,$user);
-
+	error_log("Received data");
 	/* Here is the patch for Mattermost 4.4 and older. Gitlab has changed
 	 the JSON output of oauth service. Many data are not used by
 	 Mattermost, but there is a stack error if we delete them. That's the

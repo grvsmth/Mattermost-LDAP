@@ -14,6 +14,7 @@ $request = OAuth2\Request::createFromGlobals();
 $response = new OAuth2\Response();
 
 // validate the authorize request
+error_log("Validating authorize request");
 if (!$server->validateAuthorizeRequest($request, $response)) {
     $response->send();
     die;
@@ -25,11 +26,12 @@ if (!isset($_SESSION['uid']))
   //store the authorize request
   $explode_url=explode("/", strip_tags(trim($_SERVER['REQUEST_URI']))); 
   $_SESSION['auth_page']=end($explode_url);
+  error_log("Redirectiong to index.php");
   header('Location: index.php');
   exit();
 }
 
-
+error_log("Displaying authorization form");
 // display an authorization form
 if (empty($_POST)) {
   exit('
@@ -111,15 +113,18 @@ if (empty($_POST)) {
 
 // print the authorization code if the user has authorized your client
 $is_authorized = ($_POST['authorized'] === 'Authorize');
+error_log("calling \$server->handleAuthorizeRequest()");
 $server->handleAuthorizeRequest($request, $response, $is_authorized,$_SESSION['uid']);
 
 if ($is_authorized) 
 {
-  // This is only here so that you get to see your code in the cURL request. Otherwise, we'd redirect back to the client
+  error_log("Authorized!  Redirectiong to " . $response->getHttpHeader('Location'));
+  // This is only here so that you get to see your code in the cURL request.
+  // Otherwise, we'd redirect back to the client
   $code = substr($response->getHttpHeader('Location'), strpos($response->getHttpHeader('Location'), 'code=')+5, 40);
   header('Location: ' . $response->getHttpHeader('Location'));
   exit();
 }
-
+error_log("Not authorized!");
 // Send message in case of error
 $response->send();

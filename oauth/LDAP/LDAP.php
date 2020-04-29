@@ -103,7 +103,7 @@ class LDAP implements LDAPInterface
             throw new InvalidArgumentException('Seventh argument to LDAP/checkLogin must be an optional password for the service account on restrictive LDAP (string).');
         }
        
-         // If LDAP service account for search is specified, do an ldap_bind with this account
+        // If LDAP service account for search is specified, do an ldap_bind with this account
         if ($ldap_bind_dn != '' && $ldap_bind_dn != null)
         {
             $bind_result=ldap_bind($this->ldap_server,$ldap_bind_dn,$ldap_bind_pass);
@@ -123,7 +123,7 @@ class LDAP implements LDAPInterface
             $search_filter = $ldap_search_attribute . '=' . $user;
         }
 
-        
+        error_log("ldap_search(server, $ldap_base_dn, $search_filter, array(), 0, 1, 500)");
         $result = ldap_search($this->ldap_server, $ldap_base_dn, $search_filter, array(), 0, 1, 500);
 
         if (!$result)
@@ -134,8 +134,12 @@ class LDAP implements LDAPInterface
         $data = ldap_first_entry($this->ldap_server, $result);
         if (!$data)
         {
-            throw new Exception('An error has occured during ldap_first_entry execution. Please check parameter of LDAP/checkLogin.');
-        }
+            throw new Exception(
+		'An error has occured during ldap_first_entry execution. Please check parameter of LDAP/checkLogin.'
+	    );
+        } else {
+	    error_log("Successfully got first search result: \$data = " . json_encode($data));
+	}
         $dn = ldap_get_dn($this->ldap_server, $data);
         if (!$dn)
         {
@@ -222,7 +226,9 @@ class LDAP implements LDAPInterface
         $data = ldap_first_entry($this->ldap_server, $result);
         if (!$data)
         {
-        	throw new Exception('An error has occured during ldap_first_entry execution. Please check parameter of LDAP/getData.');
+        	throw new Exception(
+                    'An error has occured during ldap_first_entry execution. Please check parameter of LDAP/getData.'
+                );
         }
 
         $mail = ldap_get_values($this->ldap_server, $data, "mail");
