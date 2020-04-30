@@ -51,7 +51,7 @@ session_start();
 		      <tr><td colspan="2">&nbsp;</td></tr>
 		      <tr>
 			<td colspan="2" align="center">
-			  <input type="submit" class="GreenButton" name="login" value="       Connect       " />
+			  <input type="submit" class="GreenButton" name="login" value="CONTINUE" />
 			</td>
 		      </tr>
 		      

@@ -39,14 +39,18 @@ body {
 
 .GreenButton
 {
-  color: white;
-  font-family : "Tahoma", "Arial", serif;
-  font-size : 10pt;
-  font-weight: normal;
+  color: #e82e21;
+  outline: 0;
   height: 28px;
-    background: transparent url(images/ButtonGreen.png) repeat-x left top;
-    border: solid 1px #50B4AE;
-    font-weight: bold;
+  border: none;
+  padding: 8px 30px;
+  margin: 10px 1px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.333333;
+  text-transform: uppercase;
 }
 
 .messageLogin {
