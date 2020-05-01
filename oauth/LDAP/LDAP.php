@@ -133,6 +133,7 @@ class LDAP implements LDAPInterface
 
         $data = ldap_first_entry($this->ldap_server, $result);
         if (!$data)
+	{
             throw new Exception('No result from LDAP server', 404);
         } else {
 	    error_log("Successfully got first search result: \$data = " . json_encode($data));
