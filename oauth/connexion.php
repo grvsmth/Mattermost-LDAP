@@ -23,10 +23,15 @@ else
   		echo 'Username is longer than 15 characters ... Please try again<br /><br />';
 		echo 'Click <a href="./index.php">here</a> to come back to login page';
     }
-    elseif (strlen($_POST['password']) > 50 || strlen($_POST['password']) <= 7)
+    elseif (strlen($_POST['password']) > 50)
     {
-    	echo 'Password is too long (>50 characters) or too short (<7 characters) ... Please try again<br /><br />';
-		echo 'Click <a href="./index.php">here</a> to come back to login page';
+	echo 'Password is longer than 50 characters ... Please try again<br /><br />';
+	echo 'Click <a href="./index.php">here</a> to come back to login page';
+
+    } elseif (strlen($_POST['password']) <= 7)
+    {
+    	echo 'Password is shorter than 7 characters ... Please try again<br /><br />';
+	echo 'Click <a href="./index.php">here</a> to come back to login page';
     } 
     else
    	{
@@ -42,28 +47,37 @@ else
 
 	// Check user credential on LDAP
 	try{
-		error_log(
+	    error_log(
 "checklogin($user, \$password, $ldap_search_attribute, $ldap_filter, $ldap_base_dn, $ldap_bind_dn, \$ldap_bind_pass"
-		);
-		$authenticated = $ldap->checkLogin(
-			$user,
-			$password,
-			$ldap_search_attribute,
-			$ldap_filter,
-			$ldap_base_dn,
-			$ldap_bind_dn,
-			$ldap_bind_pass
-		);
+	    );
+	    $authenticated = $ldap->checkLogin(
+		$user,
+		$password,
+		$ldap_search_attribute,
+		$ldap_filter,
+		$ldap_base_dn,
+		$ldap_bind_dn,
+		$ldap_bind_pass
+	    );
 	}
 	catch (Exception $e)
 	{
+	    if ($e->getCode() == 404) {
 		$resp = json_encode(
-			array(
-				"error" => "Impossible to get data",
-				"message" => $e->getMessage()
-			)
+		    [
+			"error" => "User not found",
+			"message" => "$user is not in the group of authorized users."
+		    ]
 		);
-		$authenticated = false;
+	    } else {
+		$resp = json_encode(
+		    array(
+			"error" => "Impossible to get data",
+			"message" => $e->getMessage()
+		    )
+		);
+	    }
+	    $authenticated = false;
 	}
 
 	// If user is authenticated

@@ -40,16 +40,18 @@ if (empty($_POST)) {
   <head>
     <meta charset="UTF-8" />
       <link rel="stylesheet" type="text/css" href="./style.css">
-    <title>Authorisation Mattermost</title>
+    <title>Authorisation for Mattermost</title>
   </head>
 
   <body>
 
 
 <center>
-  <table background="images/login.png" border="0" width="729" height="343" cellspacing="1" cellpadding="4">
+  <table border="0" width="729" height="343" cellspacing="1" cellpadding="4">
     <tr>
-      <td width="40%">&nbsp;</td>
+      <td width="40%">
+      	<img src="images/TNS_Logo3_Large_RGB.jpg" />
+      </td>
       
       <td width="60%">
         <table border="0" width="100%">
