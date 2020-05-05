@@ -14,7 +14,6 @@ $request = OAuth2\Request::createFromGlobals();
 $response = new OAuth2\Response();
 
 // validate the authorize request
-error_log("Validating authorize request");
 if (!$server->validateAuthorizeRequest($request, $response)) {
     $response->send();
     die;
@@ -24,9 +23,10 @@ if (!$server->validateAuthorizeRequest($request, $response)) {
 if (!isset($_SESSION['uid']))
 {
   //store the authorize request
-  $explode_url=explode("/", strip_tags(trim($_SERVER['REQUEST_URI']))); 
+  $explode_url=explode("/", strip_tags(trim($_SERVER['REQUEST_URI'])));
   $_SESSION['auth_page']=end($explode_url);
-  error_log("Redirectiong to index.php");
+  error_log("authorize.php called with auth_page = $_SESSION['auth_page']");
+  error_log("Authorization not valid; redirectiong to index.php for login");
   header('Location: index.php');
   exit();
 }
