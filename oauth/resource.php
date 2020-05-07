@@ -12,8 +12,13 @@ require_once __DIR__.'/server.php';
 require_once __DIR__.'/LDAP/LDAP.php';
 require_once __DIR__.'/LDAP/config_ldap.php';
 
+$request = OAuth2\Request::createFromGlobals();
+error_log(
+    "resource.php about to verifyResourceRequest(" . json_encode($request->request) . ")"
+);
+
 // Handle a request to a resource and authenticate the access token
-if (!$server->verifyResourceRequest(OAuth2\Request::createFromGlobals())) {
+if (!$server->verifyResourceRequest($request)) {
     $server->getResponse()->send();
     die;
 }
@@ -23,7 +28,7 @@ $resp = array("error" => "Unknown error", "message" => "An unknown error has occ
 
 error_log("resource.php about to getAccessTokenData()");
 // get information on user associated to the token
-$info_oauth = $server->getAccessTokenData(OAuth2\Request::createFromGlobals());
+$info_oauth = $server->getAccessTokenData($request);
 $user = $info_oauth["user_id"];
 $assoc_id = intval($info_oauth["assoc_id"]);
 

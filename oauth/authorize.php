@@ -13,6 +13,11 @@ require_once __DIR__.'/server.php';
 $request = OAuth2\Request::createFromGlobals();
 $response = new OAuth2\Response();
 
+error_log(
+    "resource.php about to validateAuthorizeRequest(" . json_encode($request->request) . ")"
+);
+error_log("headers = " . json_encode($request->headers));
+
 // validate the authorize request
 if (!$server->validateAuthorizeRequest($request, $response)) {
     $response->send();
