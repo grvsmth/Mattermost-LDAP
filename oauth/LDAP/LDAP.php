@@ -136,7 +136,7 @@ class LDAP implements LDAPInterface
 	{
             throw new Exception('No result from LDAP server', 404);
         } else {
-	    error_log("Successfully got first search result: \$data = $data"));
+	    error_log("Successfully got first search result: \$data = $data");
         }
 
         $dn = ldap_get_dn($this->ldap_server, $data);
