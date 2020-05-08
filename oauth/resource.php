@@ -29,12 +29,11 @@ $user = $info_oauth["user_id"];
 $assoc_id = intval($info_oauth["assoc_id"]);
 
 // Open a LDAP connection
-$ldap = new LDAP($ldap_host,$ldap_port,$ldap_version);
+$ldap = new LDAP($ldap_host, $ldap_port, $ldap_version);
 
 // Try to get user data on the LDAP
-try
-{
-	$data = $ldap->getDataForMattermost($ldap_base_dn,$ldap_filter,$ldap_bind_dn,$ldap_bind_pass,$ldap_search_attribute,$user);
+try {
+    $data = $ldap->getDataForMattermost($ldap_base_dn, $ldap_filter, $ldap_bind_dn, $ldap_bind_pass, $ldap_search_attribute, $user);
 
 	/* Here is the patch for Mattermost 4.4 and older. Gitlab has changed
 	 the JSON output of oauth service. Many data are not used by
