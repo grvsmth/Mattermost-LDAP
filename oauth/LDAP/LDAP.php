@@ -123,7 +123,6 @@ class LDAP implements LDAPInterface
             $search_filter = $ldap_search_attribute . '=' . $user;
         }
 
-        error_log("ldap_search(server, $ldap_base_dn, $search_filter, array(), 0, 1, 500)");
         $result = ldap_search($this->ldap_server, $ldap_base_dn, $search_filter, array(), 0, 1, 500);
 
         if (!$result)
@@ -135,8 +134,6 @@ class LDAP implements LDAPInterface
         if (!$data)
 	{
             throw new Exception('No result from LDAP server', 404);
-        } else {
-	    error_log("Successfully got first search result: \$data = $data");
         }
 
         $dn = ldap_get_dn($this->ldap_server, $data);
@@ -243,7 +240,6 @@ class LDAP implements LDAPInterface
         }
 
 	$return_data = array("mail" => $mail[0], "cn" => $cn[0]);
-	error_log("LDAP \$return_data = " . json_encode($return_data));
         return $return_data;
     }
 

@@ -9,7 +9,6 @@ require_once __DIR__.'/server.php';
 require_once __DIR__.'/config.php';
 
 
-error_log("token.php \$_POST = " . json_encode($_POST));
 /*
 
   The Mattermost server seems to be returning bare http urls, even

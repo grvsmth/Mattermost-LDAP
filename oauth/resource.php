@@ -13,9 +13,6 @@ require_once __DIR__.'/LDAP/LDAP.php';
 require_once __DIR__.'/LDAP/config_ldap.php';
 
 $request = OAuth2\Request::createFromGlobals();
-error_log(
-    "resource.php about to verifyResourceRequest(" . json_encode($request->request) . ")"
-);
 
 // Handle a request to a resource and authenticate the access token
 if (!$server->verifyResourceRequest($request)) {
@@ -26,7 +23,6 @@ if (!$server->verifyResourceRequest($request)) {
 // set default error message
 $resp = array("error" => "Unknown error", "message" => "An unknown error has occured, please report this bug");
 
-error_log("resource.php about to getAccessTokenData()");
 // get information on user associated to the token
 $info_oauth = $server->getAccessTokenData($request);
 $user = $info_oauth["user_id"];
@@ -38,19 +34,13 @@ $ldap = new LDAP($ldap_host,$ldap_port,$ldap_version);
 // Try to get user data on the LDAP
 try
 {
-	error_log("getDataForMattermost($ldap_base_dn, $ldap_filter, $ldap_bind_dn, \$ldap_bind_pass, $ldap_search_attribute, $user)");
 	$data = $ldap->getDataForMattermost($ldap_base_dn,$ldap_filter,$ldap_bind_dn,$ldap_bind_pass,$ldap_search_attribute,$user);
-	error_log("Received data");
+
 	/* Here is the patch for Mattermost 4.4 and older. Gitlab has changed
 	 the JSON output of oauth service. Many data are not used by
 	 Mattermost, but there is a stack error if we delete them. That's the
 	 reason why date and many parameters are null or empty.
 	*/
-	if ($data) {
-	    error_log("resource.php \$data = " . json_encode($data));
-	} else {
-	    error_log("$data is null");
-        }
 
 	$resp = array(
 	    "id" => $assoc_id,
@@ -86,7 +76,6 @@ try
 	    "external" => false,
 	    "shared_runners_minutes_limit" => null
 	);
-	error_log("\$resp = " . json_encode($resp));
 
 	// Below is the old version, still consistent with Mattermost before version 4.4
 	// $resp = array("name" => $data['cn'],"username" => $user,"id" => $assoc_id,"state" => "active","email" => $data['mail']);

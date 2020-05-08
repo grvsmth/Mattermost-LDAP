@@ -46,9 +46,6 @@ else
 
 	// Check user credential on LDAP
 	try{
-	    error_log(
-"checklogin($user, \$password, $ldap_search_attribute, $ldap_filter, $ldap_base_dn, $ldap_bind_dn, \$ldap_bind_pass"
-	    );
 	    $authenticated = $ldap->checkLogin(
 		$user,
 		$password,
@@ -87,7 +84,6 @@ else
 	    if (isset($_SESSION['auth_page']))
 	    {
 	    	$auth_page=$_SESSION['auth_page'];
-		error_log("Successfully authenticated! Redirecting to $auth_page");
 	    	header('Location: ' . $auth_page);
 		exit();
 	    }
