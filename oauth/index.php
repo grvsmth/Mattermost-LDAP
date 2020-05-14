@@ -23,9 +23,12 @@ function messageShow($html_template, $message = 'No Msg') {
     echo $html_template->saveHTML();
 }
 
+// If there is no POST data, simply display the login
+if ($_SERVER['REQUEST_METHOD'] != "POST") {
+   echo $prompt_template->saveHTML();
 
-// Verify all fields have been filled
-if (empty($_POST['user']) || empty($_POST['password']))
+// Otherwise, verify all fields have been filled
+} else if (empty($_POST['user']) || empty($_POST['password']))
 {
     if (empty($_POST['user'])) {
         messageShow($prompt_template, 'Username field can\'t be empty.');
