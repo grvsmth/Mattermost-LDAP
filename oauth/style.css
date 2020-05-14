@@ -63,7 +63,7 @@ table {
     justify-content: center;
     align-items: center;
     position: absolute;
-    transform: translate(-50%, 25%);
+    transform: translate(-50%, 5%);
 }
 
 /* Style input fields */
@@ -118,7 +118,7 @@ table {
     text-transform: capitalize;
     text-align: center;
     display: inline-block;
-    margin-top: 25%;
+    margin-top: 5%;
     margin-right: 2%;
     width: 50%;
 }
