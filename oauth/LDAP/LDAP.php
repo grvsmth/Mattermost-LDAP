@@ -115,6 +115,7 @@ class LDAP implements LDAPInterface
         }
 
         $data = ldap_first_entry($this->ldap_server, $result);
+
         if (!$data)
 	{
             throw new Exception('No result from LDAP server', 404);
