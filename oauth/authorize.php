@@ -57,12 +57,11 @@ else if (empty($_POST)) {
     <body>
         <div id="form-wrapper" style="text-align: center;">
             <div id="form_credentials">
-                <h1>LDAP Authentication</h1>
                 <div id="form_icon">
-                    <img src="images/TNS_Logo3_Large_RGB.jpg" alt="authentication icon" />
+                    <img src="images/TNS_Logo3_Large_RGB.jpg" alt="authentication icon" style="width: 700px" />
                 </div>
                 <br>
-                <h2>Authorize Mattermost to get the following data:</h2>
+                <h2>Authorize New School IT Team Chat to get the following data:</h2>
                 <table>
                     <tr>
                         <td>
@@ -71,14 +70,11 @@ else if (empty($_POST)) {
                         </td>
                     </tr>
                 </table>
-                <br/>
-                Logged as : <strong>' . $_SESSION['uid'] . ' </strong> <button type="submit" class="link" name="disconnect" value="true" ><span>(not me ?)</span></button>
-                <br/>
-                <br/>
+                <p class="logged_in_as">Logged in as : <strong>' . $_SESSION['uid'] . ' </strong></p>
 
                 <form method="POST">
                     <input type="submit" value="Authorize" name="authorized" id="input_accept" class="input_field">
-                    <input type="submit" value="Deny" name="authorized" id="input_deny" class="input_field">
+		<button type="submit" class="input_field" name="disconnect" value="true" id="input_deny">Not me</button>
                 </form>
             </div>
         </div>
